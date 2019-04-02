@@ -8,16 +8,18 @@ public class MinMaxAlgorithm: MoveMaker
 {
     public EvaluationFunction evaluator;
     private UtilityFunction utilityfunc; 
-    public int depth = 0;
+    public int MaxDepth = 4;
     private PlayerController MaxPlayer;
     private PlayerController MinPlayer;
+    private bool AlphaBeta;
     
-    public MinMaxAlgorithm(PlayerController MaxPlayer, EvaluationFunction eval, UtilityFunction utilf, PlayerController MinPlayer)
+    public MinMaxAlgorithm(bool AlphaBeta, PlayerController MaxPlayer, EvaluationFunction eval, UtilityFunction utilf, PlayerController MinPlayer)
     {
         this.MaxPlayer = MaxPlayer;
         this.MinPlayer = MinPlayer;
         this.evaluator = eval;
         this.utilityfunc = utilf;
+        this.AlphaBeta = AlphaBeta;
     }
 
     public override State MakeMove()
@@ -29,21 +31,78 @@ public class MinMaxAlgorithm: MoveMaker
     private State GenerateNewState()
     {
         // Creates initial state
-        State newState = new State(this.MaxPlayer, this.MinPlayer); 
-        // Call the MinMax implementation
-        State bestMove = MinMax();
-        // returning the actual state. You should modify this
-        return newState;
+        State initialState = new State(this.MaxPlayer, this.MinPlayer);
+        return MinMax(initialState,true);
     }
 
-    public State MinMax()
+    // Root is the state of entry
+    public State MinMax(State root)
+    {      
+        List<State> tree = GeneratePossibleStates(root);
+
+        State bestnode = null;
+
+        foreach(State node in tree)
+        {
+            if(bestnode == null){
+                bestnode = node;
+                continue;
+            } 
+
+            Max(node);
+            
+            if(root.CompareTo(node) < 0)
+                bestnode = node;
+        }
+
+        return bestnode;
+    }
+
+    public void Max(state parent)
     {
-        /////////////////////////////
-        // You should implement this
-        /////////////////////////////
-        return null;
+        if(utilityfunc.evaluate(parent) != 0)
+        {
+            parent.Score = utilityfunc.evaluate(parent);
+            return;
+        }
+
+        if(parent.depth >= this.MaxDepth)
+        {
+            parent.Score = evaluator.evaluate(parent);
+            return;
+        }
+
+        List<State> tree = GeneratePossibleStates(parent);
+        foreach(State node in tree)
+        {
+            Min(node);
+            if(parent.CompareTo(node) > 0)
+                parent.Score = node.Score;
+        }
     }
 
+    public void Min(state parent)
+    {
+        if(utilityfunc.evaluate(parent) != 0)
+        {
+            parent.Score = utilityfunc.evaluate(parent);
+            return;
+        }
+
+        if(parent.depth >= this.MaxDepth)
+        {
+            parent.Score = evaluator.evaluate(parent);
+            return;
+        }
+
+        List<State> tree = GeneratePossibleStates(parent);
+        foreach(State node in tree)
+        {
+            Max(node);
+            if(parent.CompareTo(node) < 0)
+                parent.Score = node.Score;
+        }
+    }
 
     private List<State> GeneratePossibleStates(State state)
     {

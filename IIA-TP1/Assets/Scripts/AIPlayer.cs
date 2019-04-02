@@ -68,7 +68,10 @@ public class AIPlayer : PlayerController
                 myStrategy = new RandomSolution(this, GameManager.instance.GetAdversary(this));
                 break;
             case TypeStrategy.MinMax:
-                myStrategy = new MinMaxAlgorithm(this, eval, ufunc, GameManager.instance.GetAdversary(this));
+                myStrategy = new MinMaxAlgorithm(false, this, eval, ufunc, GameManager.instance.GetAdversary(this));
+                break;
+            case TypeStrategy.MinMaxAB:
+                myStrategy = new MinMaxAlgorithm(true, this, eval, ufunc, GameManager.instance.GetAdversary(this));
                 break;
             default:
                 Debug.Log("Not an option");

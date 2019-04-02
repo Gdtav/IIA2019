@@ -18,6 +18,8 @@ public class State : System.IComparable
     public bool isAttack = false;
     public bool isRoot;
     public int depth = -1;
+    public int alpha;
+    public int beta;
 
 
 
@@ -33,6 +35,8 @@ public class State : System.IComparable
         this.parentState = null;
         this.isRoot = true;
         this.depth = 0;
+        this.alpha = Int32.MaxValue;
+        this.beta = Int32.MinValue;
     }
 
     public State(State parentState, Unit currentUnit, bool isMove)
@@ -49,6 +53,8 @@ public class State : System.IComparable
         this.isAttack = !isMove;
         this.parentState = parentState.DeepCopyByExpressionTree();
         this.depth = parentState.depth + 1;
+		this.alpha = parentState.alpha;
+		this.alpha = parentState.beta;
     }
 
     public State(State s)
