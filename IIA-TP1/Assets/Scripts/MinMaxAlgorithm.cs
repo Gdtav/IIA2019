@@ -8,19 +8,20 @@ public class MinMaxAlgorithm: MoveMaker
 {
     public EvaluationFunction evaluator;
     private UtilityFunction utilityfunc; 
-    public int MaxDepth = 3;
+    public int MaxDepth = 4;
     private PlayerController MaxPlayer;
     private PlayerController MinPlayer;
 	private System.Random random;
     private bool AlphaBeta;
     
-    public MinMaxAlgorithm(bool AlphaBeta, PlayerController MaxPlayer, EvaluationFunction eval, UtilityFunction utilf, PlayerController MinPlayer)
+    public MinMaxAlgorithm(bool AlphaBeta, int MaxDepth, PlayerController MaxPlayer, EvaluationFunction eval, UtilityFunction utilf, PlayerController MinPlayer)
     {
         this.MaxPlayer = MaxPlayer;
         this.MinPlayer = MinPlayer;
         this.evaluator = eval;
         this.utilityfunc = utilf;
         this.AlphaBeta = AlphaBeta;
+		this.MaxDepth = MaxDepth;
     }
 
     public override State MakeMove()

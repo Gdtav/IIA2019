@@ -25,11 +25,12 @@ public class AIPlayer : PlayerController
 
     public enum UtilityFunc
     {
-        Util
+		Util
     };
     public TypeStrategy strategy;
     public EvaluatationFunc evalfunc;
     public UtilityFunc utilfunc;
+	public int MinMax_MaxDepth = 3;
 
     private void InitAI()
     {
@@ -69,10 +70,10 @@ public class AIPlayer : PlayerController
                 myStrategy = new RandomSolution(this, GameManager.instance.GetAdversary(this));
                 break;
             case TypeStrategy.MinMax:
-                myStrategy = new MinMaxAlgorithm(false, this, eval, ufunc, GameManager.instance.GetAdversary(this));
+			myStrategy = new MinMaxAlgorithm(false, MinMax_MaxDepth, this, eval, ufunc, GameManager.instance.GetAdversary(this));
                 break;
             case TypeStrategy.MinMaxAB:
-                myStrategy = new MinMaxAlgorithm(true, this, eval, ufunc, GameManager.instance.GetAdversary(this));
+			myStrategy = new MinMaxAlgorithm(true, MinMax_MaxDepth, this, eval, ufunc, GameManager.instance.GetAdversary(this));
                 break;
             default:
                 Debug.Log("Not an option");

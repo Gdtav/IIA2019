@@ -14,7 +14,7 @@ public class EvaluationFunction
             hp += unit.hp;
         }
 
-        score += hp/units;
+		score += hp/units + (float)Math.Pow(units,2);
         units = 0; hp = 0;
 
         foreach(Unit unit in s.AdversaryUnits)
@@ -23,7 +23,7 @@ public class EvaluationFunction
             hp += unit.hp;
         }
         
-        score -= hp/units;
+		score -= hp/units - (float)Math.Pow(units,2);
 
 		return score;
     }
