@@ -8,14 +8,13 @@ public class EvaluationFunction
     public float evaluate(State s)
     {
         float score = 0, hp = 0, units = 0;
-
 		foreach(Unit unit in s.PlayersUnits)
         {
             units++;
             hp += unit.hp;
         }
 
-        score += units*hp;
+        score += hp/units;
         units = 0; hp = 0;
 
         foreach(Unit unit in s.AdversaryUnits)
@@ -24,10 +23,8 @@ public class EvaluationFunction
             hp += unit.hp;
         }
         
-        score -= units*hp;
+        score -= hp/units;
 
-		if(s.unitAttacked != null)
-			score += 2500;
 		return score;
     }
 }

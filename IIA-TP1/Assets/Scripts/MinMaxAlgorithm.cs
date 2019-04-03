@@ -11,6 +11,7 @@ public class MinMaxAlgorithm: MoveMaker
     public int MaxDepth = 3;
     private PlayerController MaxPlayer;
     private PlayerController MinPlayer;
+	private System.Random random;
     private bool AlphaBeta;
     
     public MinMaxAlgorithm(bool AlphaBeta, PlayerController MaxPlayer, EvaluationFunction eval, UtilityFunction utilf, PlayerController MinPlayer)
@@ -31,81 +32,75 @@ public class MinMaxAlgorithm: MoveMaker
     private State GenerateNewState()
     {
         // Creates initial state
-        State initialState = new State(this.MaxPlayer, this.MinPlayer);
-        return MinMax(initialState);
-    }
+        State root = new State(this.MaxPlayer, this.MinPlayer);
+		List<State> tree = GeneratePossibleStates(root);
+		tree.Sort();
+		State bestnode = null;
 
-    // Root is the state of entry
-    public State MinMax(State root)
-    {      
-        List<State> tree = GeneratePossibleStates(root);
+		foreach(State node in tree)
+		{
+			if(bestnode == null){
+				bestnode = node;
+			} 
+				
+			node.Score = Min(node);
 
-        State bestnode = null;
-
-        foreach(State node in tree)
-        {
-            if(bestnode == null){
-                bestnode = node;
-                continue;
-            } 
-
-            Min(node);
-            
-            if(root.CompareTo(node) < 0)
-                bestnode = node;
-        }
-
+			if(bestnode.CompareTo(node) < 0)
+			{
+				bestnode = node;
+			}
+		}
         return bestnode;
     }
 
-    public void Max(State parent)
+    public float Max(State parent)
     {
         if(utilityfunc.evaluate(parent) != 0)
         {
-            parent.Score = utilityfunc.evaluate(parent);
-            return;
+			return utilityfunc.evaluate(parent);
         }
 
         if(parent.depth >= this.MaxDepth)
         {
-            parent.Score = evaluator.evaluate(parent);
-            return;
+			return evaluator.evaluate(parent);
         }
 
         List<State> tree = GeneratePossibleStates(parent);
-		int i = 0;
+		float max= Int32.MinValue;
+
         foreach(State node in tree)
         {
-			
-			i++;
-            Min(node);
-			Debug.Log("parent: " + parent.Score + "\tchild: " + node.Score + "Compare: " + parent.CompareTo(node));
-            if(parent.CompareTo(node) < 0)
-                parent.Score = node.Score;
+            node.Score = Min(node);
+			if(node.Score > max)
+                max = node.Score;
         }
+
+		return max;
     }
 
-    public void Min(State parent)
+    public float Min(State parent)
     {
         if(utilityfunc.evaluate(parent) != 0)
         {
-            parent.Score = utilityfunc.evaluate(parent);
-            return;
+			return utilityfunc.evaluate(parent);
         }
 
         if(parent.depth >= this.MaxDepth)
         {
-            parent.Score = evaluator.evaluate(parent);
-            return;
+			return evaluator.evaluate(parent);
         }
 
         List<State> tree = GeneratePossibleStates(parent);
+		float min = Int32.MaxValue;
+
         foreach(State node in tree)
         {
-            Max(node);
-            if(parent.CompareTo(node) > 0)
-                parent.Score = node.Score;
+            node.Score = Max(node);
+            if(node.Score < min)
+                min = node.Score;
         }
+
+		return min;
     }
 
     private List<State> GeneratePossibleStates(State state)
