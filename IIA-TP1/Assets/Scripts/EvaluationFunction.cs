@@ -9,7 +9,7 @@ public class EvaluationFunction
     {
         float score = 0, hp = 0, units = 0;
 
-        for(each unit in s.PlayersUnits)
+		foreach(Unit unit in s.PlayersUnits)
         {
             units++;
             hp += unit.hp;
@@ -18,14 +18,16 @@ public class EvaluationFunction
         score += units*hp;
         units = 0; hp = 0;
 
-        for(each unit in s.AdversaryUnits)
+        foreach(Unit unit in s.AdversaryUnits)
         {
             units++;
             hp += unit.hp;
         }
         
         score -= units*hp;
-        
-        return score;
+
+		if(s.unitAttacked != null)
+			score += 2500;
+		return score;
     }
 }

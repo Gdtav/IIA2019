@@ -8,7 +8,7 @@ public class MinMaxAlgorithm: MoveMaker
 {
     public EvaluationFunction evaluator;
     private UtilityFunction utilityfunc; 
-    public int MaxDepth = 4;
+    public int MaxDepth = 3;
     private PlayerController MaxPlayer;
     private PlayerController MinPlayer;
     private bool AlphaBeta;
@@ -32,7 +32,7 @@ public class MinMaxAlgorithm: MoveMaker
     {
         // Creates initial state
         State initialState = new State(this.MaxPlayer, this.MinPlayer);
-        return MinMax(initialState,true);
+        return MinMax(initialState);
     }
 
     // Root is the state of entry
@@ -49,7 +49,7 @@ public class MinMaxAlgorithm: MoveMaker
                 continue;
             } 
 
-            Max(node);
+            Min(node);
             
             if(root.CompareTo(node) < 0)
                 bestnode = node;
@@ -58,7 +58,7 @@ public class MinMaxAlgorithm: MoveMaker
         return bestnode;
     }
 
-    public void Max(state parent)
+    public void Max(State parent)
     {
         if(utilityfunc.evaluate(parent) != 0)
         {
@@ -73,15 +73,19 @@ public class MinMaxAlgorithm: MoveMaker
         }
 
         List<State> tree = GeneratePossibleStates(parent);
+		int i = 0;
         foreach(State node in tree)
         {
+			
+			i++;
             Min(node);
-            if(parent.CompareTo(node) > 0)
+			Debug.Log("parent: " + parent.Score + "\tchild: " + node.Score + "Compare: " + parent.CompareTo(node));
+            if(parent.CompareTo(node) < 0)
                 parent.Score = node.Score;
         }
     }
 
-    public void Min(state parent)
+    public void Min(State parent)
     {
         if(utilityfunc.evaluate(parent) != 0)
         {
@@ -99,7 +103,7 @@ public class MinMaxAlgorithm: MoveMaker
         foreach(State node in tree)
         {
             Max(node);
-            if(parent.CompareTo(node) < 0)
+            if(parent.CompareTo(node) > 0)
                 parent.Score = node.Score;
         }
     }

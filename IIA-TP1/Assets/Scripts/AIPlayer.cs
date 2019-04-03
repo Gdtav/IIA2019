@@ -14,6 +14,7 @@ public class AIPlayer : PlayerController
     public enum TypeStrategy
     {
         MinMax,
+		MinMaxAB,
         RandomStrategy,
     };
 
@@ -102,12 +103,12 @@ public class AIPlayer : PlayerController
             computing = true;
             currentmove = null;
             EZThread.ExecuteInBackground(moveMaker.MakeMove, ComputeTheMove);
-            Debug.Log("[AI] thinking.. computing:" + computing + " updateboard:" + base.updateboard);
+            //Debug.Log("[AI] thinking.. computing:" + computing + " updateboard:" + base.updateboard);
         }
 
         if (!computing && base.updateboard)
         {
-            Debug.Log("[AI] performing move! computing:" + computing + " updateboard:" + base.updateboard);
+            //Debug.Log("[AI] performing move! computing:" + computing + " updateboard:" + base.updateboard);
             UpdateBoard(currentmove);
         }
     }

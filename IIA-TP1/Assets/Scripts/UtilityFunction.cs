@@ -7,7 +7,7 @@ public class UtilityFunction
 
     public float evaluate(State s)
     {
-        if(s.PlayerUnits.Count == 0)
+		if(s.PlayersUnits.Count == 0)
             return Int32.MinValue;
         else if(s.AdversaryUnits.Count == 0)
             return Int32.MaxValue;
