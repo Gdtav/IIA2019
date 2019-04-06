@@ -43,14 +43,19 @@ public class MinMaxAlgorithm: MoveMaker
 			if(bestnode == null){
 				bestnode = node;
 			} 
-				
-			node.Score = Min(node);
+
+            if(this.AlphaBeta == false)	
+			    node.Score = Min(node);
+            else
+                node.Score = Min(node,float.MinValue, float.MaxValue);
 
 			if(bestnode.CompareTo(node) < 0)
 			{
 				bestnode = node;
 			}
 		}
+
+		this.MaxPlayer.ExpandedNodes = 0;
         return bestnode;
     }
 
@@ -67,13 +72,11 @@ public class MinMaxAlgorithm: MoveMaker
         }
 
         List<State> tree = GeneratePossibleStates(parent);
-		float max= Int32.MinValue;
+		float max= float.MinValue;
 
         foreach(State node in tree)
-        {
-            node.Score = Min(node);
-			if(node.Score > max)
-                max = node.Score;
+        {	
+            max = Math.Max(max, Min(node));
         }
 
 		return max;
@@ -92,13 +95,68 @@ public class MinMaxAlgorithm: MoveMaker
         }
 
         List<State> tree = GeneratePossibleStates(parent);
-		float min = Int32.MaxValue;
+		float min = float.MaxValue;
 
         foreach(State node in tree)
         {
-            node.Score = Max(node);
-            if(node.Score < min)
-                min = node.Score;
+			min = Math.Min(min, Max(node));
+        }
+
+		return min;
+    }
+
+
+    public float Max(State parent, float alpha, float beta)
+    {
+        if(utilityfunc.evaluate(parent) != 0)
+        {
+			return utilityfunc.evaluate(parent);
+        }
+
+        if(parent.depth >= this.MaxDepth)
+        {
+			return evaluator.evaluate(parent);
+        }
+
+        List<State> tree = GeneratePossibleStates(parent);
+		float max = float.MinValue;
+
+        foreach(State node in tree)
+        {
+            max = Math.Max(max, Min(node, alpha, beta));
+
+            if(max >= beta)
+                return max;
+
+            alpha = Math.Max(alpha,max);
+        }
+
+		return max;
+    }
+
+    public float Min(State parent, float alpha, float beta)
+    {
+        if(utilityfunc.evaluate(parent) != 0)
+        {
+			return utilityfunc.evaluate(parent);
+        }
+
+        if(parent.depth >= this.MaxDepth)
+        {
+			return evaluator.evaluate(parent);
+        }
+
+        List<State> tree = GeneratePossibleStates(parent);
+		float min = float.MaxValue;
+
+        foreach(State node in tree)
+        {
+            min = Math.Min(min, Max(node, alpha, beta));
+
+            if(min <= alpha)
+                return min;
+
+            beta = Math.Min(beta,min);
         }
 
 		return min;
