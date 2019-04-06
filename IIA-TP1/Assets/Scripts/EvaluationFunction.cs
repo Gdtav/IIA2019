@@ -7,12 +7,12 @@ public class EvaluationFunction
     // Do the logic to evaluate the state of the game !
     public float evaluate(State s)
     {
-        float score = 0, hp = 0, units = 0;
+        float score = 0, hp_A = 0, units_A = 0, hp_E = 0, units_E = 0, hp_og = 0, units_og = 0;
 
         foreach (Unit unit in s.PlayersUnits)
         {
-            units++;
-            hp += unit.hp;
+            units_A++;
+            hp_A += unit.hp;
 
             if(unit == s.unitToPermormAction)
             {
@@ -65,16 +65,33 @@ public class EvaluationFunction
 
         }
 
-        score += hp/units + (float)Math.Pow(units,2);
-        units = 0; hp = 0;
-
         foreach (Unit unit in s.AdversaryUnits)
         {
-            units++;
-            hp += unit.hp;
+            units_E++;
+            hp_E += unit.hp;
         }
         
-        score -= hp/units - (float)Math.Pow(units,2);
+        State x = s;
+        while(!x.isRoot)
+            x = x.parentState;
+        
+        foreach (Unit unit in x.PlayersUnits)
+        {
+            units_og++;
+            hp_og += unit.hp;
+        }
+
+        score += 100*(hp_og + hp_A) - (float)Math.Pow(10000,Math.Abs(units_A - units_og));
+
+        units_og = 0; hp_og = 0;
+
+        foreach (Unit unit in x.AdversaryUnits)
+        {
+            units_og++;
+            hp_og += unit.hp;
+        }
+
+        score += 100*(Math.Abs(hp_E - hp_og)) + (float)Math.Pow(10000,Math.Abs(units_E - units_og));
 
 		return score;
     }
