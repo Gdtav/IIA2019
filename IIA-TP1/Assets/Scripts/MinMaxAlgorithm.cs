@@ -66,7 +66,7 @@ public class MinMaxAlgorithm: MoveMaker
 			return utilityfunc.evaluate(parent);
         }
 
-        if(parent.depth >= this.MaxDepth)
+        if(parent.depth >= this.MaxDepth || this.MaxPlayer.ExpandedNodes >= this.MaxPlayer.MaximumNodesToExpand)
         {
 			return evaluator.evaluate(parent);
         }
@@ -89,7 +89,7 @@ public class MinMaxAlgorithm: MoveMaker
 			return utilityfunc.evaluate(parent);
         }
 
-        if(parent.depth >= this.MaxDepth)
+        if(parent.depth >= this.MaxDepth || this.MaxPlayer.ExpandedNodes >= this.MaxPlayer.MaximumNodesToExpand)
         {
 			return evaluator.evaluate(parent);
         }
@@ -113,7 +113,7 @@ public class MinMaxAlgorithm: MoveMaker
 			return utilityfunc.evaluate(parent);
         }
 
-        if(parent.depth >= this.MaxDepth)
+        if(parent.depth >= this.MaxDepth || this.MaxPlayer.ExpandedNodes >= this.MaxPlayer.MaximumNodesToExpand)
         {
 			return evaluator.evaluate(parent);
         }
@@ -141,7 +141,7 @@ public class MinMaxAlgorithm: MoveMaker
 			return utilityfunc.evaluate(parent);
         }
 
-        if(parent.depth >= this.MaxDepth)
+        if(parent.depth >= this.MaxDepth || this.MaxPlayer.ExpandedNodes >= this.MaxPlayer.MaximumNodesToExpand)
         {
 			return evaluator.evaluate(parent);
         }
