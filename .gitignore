@@ -35,3 +35,6 @@ sysinfo.txt
 *.apk
 *.unitypackage
 *.meta
+IIA-TP1/Logs/Packages-Update.log
+IIA-TP1/Packages/manifest.json
+IIA-TP1/ProjectSettings/ProjectVersion.txt
