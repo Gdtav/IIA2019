@@ -10,7 +10,9 @@ public class GeneticIndividual : Individual {
 
 	public override void Initialize () 
 	{
-		throw new System.NotImplementedException ();
+		for (int i = 0; i < totalSize; i++) {
+			genotype [i] = Random.Range (-1.0f, 1.0f);
+		}
 	}
 		
 	public override void Crossover (Individual partner, float probability)
@@ -20,7 +22,11 @@ public class GeneticIndividual : Individual {
 
 	public override void Mutate (float probability)
 	{
-		throw new System.NotImplementedException ();
+		for (int i = 0; i < totalSize; i++) {
+			if (Random.Range (0.0f, 1.0f) < probability) {
+				genotype [i] = Random.Range (-1.0f, 1.0f);
+			}
+		}
 	}
 
 	public override Individual Clone ()
