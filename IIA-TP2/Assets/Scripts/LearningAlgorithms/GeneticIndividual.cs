@@ -16,10 +16,6 @@ public class GeneticIndividual : Individual {
 		}
 	}
 
-    public int CompareTo(Individual individual)
-    {
-        return this.Fitness.CompareTo(individual.Fitness);
-    }
 		
 	public override void Crossover (Individual partner, float probability, int n)
 	{

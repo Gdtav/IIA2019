@@ -33,11 +33,11 @@ public class GeneticAlgorithm : MetaHeuristic
 
         updateReport(); //called to get some stats
                         // fills the rest with mutations of the best !
-        population.Sort();
+        population.Sort((x, y) => x.Fitness.CompareTo(y.Fitness));
         if (elitist)
         {
             n -= eliteSize;
-            for (int i = populationSize - 1; i > n - 1; i--)
+            for (int i = populationSize - 1; i > n - 1 && i > 0; i--)
             {
                 new_pop.Add(population[i].Clone());
             }

@@ -191,8 +191,8 @@ public class NeuralController : MonoBehaviour
     }
 
 	public float GetScore() {
-        // Fitness function. The code to attribute fitness to individuals should be written here.  
-        float fitness = driveTime * distanceTravelled;
+        // Fitness function. The code to attribute fitness to individuals should be written here
+        float fitness = hitTheBall + (distancefromBallToMyGoal - distancefromBallToAdversaryGoal);
         return fitness;
 	}
 

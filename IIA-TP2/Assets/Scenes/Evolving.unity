@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657868, g: 0.49641263, b: 0.57481706, a: 1}
+  m_IndirectSpecularColor: {r: 0.4465782, g: 0.49641252, b: 0.5748167, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -349,20 +349,22 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1140463228}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 02d21771eeeb74e52884a6be78b317d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  populationSize: 0
-  topology: 
-  numGenerations: 0
+  populationSize: 50
+  topology: 0f0000001400000002000000
+  numGenerations: 50
   generation: 0
   logFilename: 
-  mutationProbability: 0
-  crossoverProbability: 0
+  mutationProbability: 0.5
+  crossoverProbability: 0.5
   tournamentSize: 0
-  elitist: 0
+  elitist: 1
+  eliteSize: 10
+  nCuts: 2
 --- !u!114 &1140463232
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -370,7 +372,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1140463228}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 110dd914b6d874a878dca596c8cb4731, type: 3}
   m_Name: 
