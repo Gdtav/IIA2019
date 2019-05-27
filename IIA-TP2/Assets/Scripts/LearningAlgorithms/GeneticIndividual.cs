@@ -5,7 +5,7 @@ using UnityEngine;
 public class GeneticIndividual : Individual {
 
 
-	GeneticIndividual(int[] topology) : base(topology) {
+	public GeneticIndividual(int[] topology) : base(topology) {
 	}
 
 	public override void Initialize () 

@@ -14,3 +14,4 @@
 # This pattern only works with the two previous patterns
 # (i remember it was working alone on older git versions)
 !/Assets/Scripts/
+*.asset
