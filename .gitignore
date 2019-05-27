@@ -15,3 +15,4 @@
 # (i remember it was working alone on older git versions)
 !/Assets/Scripts/
 *.asset
+IIA-TP2/ProjectSettings/ProjectSettings.asset

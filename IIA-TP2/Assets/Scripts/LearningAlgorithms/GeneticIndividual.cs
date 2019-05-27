@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -11,20 +12,52 @@ public class GeneticIndividual : Individual {
 	public override void Initialize () 
 	{
 		for (int i = 0; i < totalSize; i++) {
-			genotype [i] = Random.Range (-1.0f, 1.0f);
+			genotype [i] = UnityEngine.Random.Range (-1.0f, 1.0f);
 		}
 	}
+
+    public int CompareTo(Individual individual)
+    {
+        return this.Fitness.CompareTo(individual.Fitness);
+    }
 		
-	public override void Crossover (Individual partner, float probability)
+	public override void Crossover (Individual partner, float probability, int n)
 	{
-		throw new System.NotImplementedException ();
+        GeneticIndividual p = partner as GeneticIndividual;
+        System.Random rand = new System.Random();
+        int i;
+        float temp;
+        bool trade = false;
+        int[] cut = new int[n];
+        cut[0] = rand.Next(totalSize);
+        for (i = 1; i < n; i++)
+        {
+            cut[i] = rand.Next(cut[i-1], totalSize);
+        }
+        Array.Sort(cut);
+        i = 0;
+        for (int j = 0; j < totalSize && i < n; j++ ){
+            while (j < cut[i])
+            {
+                if (trade)
+                {
+                    temp = this.genotype[j];
+                    this.genotype[j] = p.genotype[j];
+                    this.genotype[j] = temp;
+                }
+                j++;
+            }
+            trade = !trade;
+            i++;
+        }
+
 	}
 
 	public override void Mutate (float probability)
 	{
 		for (int i = 0; i < totalSize; i++) {
-			if (Random.Range (0.0f, 1.0f) < probability) {
-				genotype [i] = Random.Range (-1.0f, 1.0f);
+			if (UnityEngine.Random.Range (0.0f, 1.0f) < probability) {
+				genotype [i] = UnityEngine.Random.Range (-1.0f, 1.0f);
 			}
 		}
 	}
