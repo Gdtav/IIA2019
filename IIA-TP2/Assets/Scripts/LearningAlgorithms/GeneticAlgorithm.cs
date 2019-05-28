@@ -34,6 +34,7 @@ public class GeneticAlgorithm : MetaHeuristic
         updateReport(); //called to get some stats
                         // fills the rest with mutations of the best !
         population.Sort((x, y) => x.Fitness.CompareTo(y.Fitness));
+
         if (elitist)
         {
             n -= eliteSize;
@@ -42,7 +43,8 @@ public class GeneticAlgorithm : MetaHeuristic
                 new_pop.Add(population[i].Clone());
             }
         }
-        new_pop.AddRange(t.selectIndividuals(population, n, 0.5));
+
+        new_pop.AddRange(t.selectIndividuals(population, n, 0.1));
 		for (int i = eliteSize; i < populationSize - 1; i+=2)
         {
             new_pop[i].Crossover(new_pop[i + 1], crossoverProbability, nCuts);

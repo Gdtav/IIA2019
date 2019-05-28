@@ -14,7 +14,7 @@ public class Tournament : SelectionMethod
         {
             i = r.Next(oldpop.Count);
             j = r.Next(oldpop.Count);
-            if (r.NextDouble() > k)
+            if (r.NextDouble() > k || oldpop[i].Fitness > oldpop[j].Fitness)
                 victors.Add(oldpop[i].Clone());
             else
                 victors.Add(oldpop[j].Clone());

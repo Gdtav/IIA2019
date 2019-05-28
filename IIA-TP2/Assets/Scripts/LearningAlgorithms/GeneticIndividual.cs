@@ -22,33 +22,36 @@ public class GeneticIndividual : Individual {
         GeneticIndividual p = partner as GeneticIndividual;
         System.Random rand = new System.Random();
         int i;
-        float temp;
         bool trade = false;
         int[] cut = new int[n];
         cut[0] = rand.Next(totalSize);
-        for (i = 1; i < n; i++)
-        {
-            cut[i] = rand.Next(cut[i-1], totalSize);
-        }
-        Array.Sort(cut);
-        i = 0;
-        for (int j = 0; j < totalSize && i < n; j++ ){
-            while (j < cut[i])
-            {
-                if (trade && rand.NextDouble() < probability)
-                {
-                    this.genotype[j] = p.genotype[j];
-                }
-				else
-				{
-					p.genotype[j] = this.genotype[j];
-				}
-                j++;
-            }
-            trade = !trade;
-            i++;
-        }
-
+		if(rand.NextDouble() < probability)
+		{
+	        for (i = 1; i < n; i++)
+	        {
+	            cut[i] = rand.Next(cut[i-1], totalSize);
+	        }
+	        Array.Sort(cut);
+	        i = 0;
+	        
+			for (int j = 0; j < totalSize && i < n; j++ )
+			{
+	            while (j < cut[i])
+	            {
+	                if (trade)
+	                {
+	                    this.genotype[j] = p.genotype[j];
+	                }
+					else
+					{
+						p.genotype[j] = this.genotype[j];
+					}
+	                j++;
+	            }
+	            trade = !trade;
+	            i++;
+	        }
+		}
 	}
 
 	public override void Mutate (float probability)
