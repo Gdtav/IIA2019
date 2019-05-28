@@ -35,7 +35,7 @@ public class GeneticIndividual : Individual {
         for (int j = 0; j < totalSize && i < n; j++ ){
             while (j < cut[i])
             {
-                if (trade)
+                if (trade && rand.NextDouble() < probability)
                 {
                     this.genotype[j] = p.genotype[j];
                 }
