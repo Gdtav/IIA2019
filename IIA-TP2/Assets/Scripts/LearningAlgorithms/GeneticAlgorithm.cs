@@ -43,7 +43,7 @@ public class GeneticAlgorithm : MetaHeuristic
             }
         }
         new_pop.AddRange(t.selectIndividuals(population, n, 0.5));
-        for (int i = 0; i < populationSize - 1; i+=2)
+		for (int i = eliteSize; i < populationSize - 1; i+=2)
         {
             new_pop[i].Crossover(new_pop[i + 1], crossoverProbability, nCuts);
             new_pop[i].Mutate(mutationProbability);

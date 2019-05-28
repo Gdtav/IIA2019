@@ -37,10 +37,12 @@ public class GeneticIndividual : Individual {
             {
                 if (trade)
                 {
-                    temp = this.genotype[j];
                     this.genotype[j] = p.genotype[j];
-                    this.genotype[j] = temp;
                 }
+				else
+				{
+					p.genotype[j] = this.genotype[j];
+				}
                 j++;
             }
             trade = !trade;
