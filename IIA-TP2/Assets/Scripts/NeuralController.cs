@@ -192,8 +192,11 @@ public class NeuralController : MonoBehaviour
 
 	public float GetScore() {
         // Fitness function. The code to attribute fitness to individuals should be written here
-		float fitness = -2500*GoalsOnMyGoal + 2000*GoalsOnAdversaryGoal + 10*avgSpeed + 1000/distanceToBall + driveTime/maxSimulTime 
-					  + 10000/Math.Abs(distanceTravelled) + (distancefromBallToMyGoal - distancefromBallToAdversaryGoal);
+		/*
+		 
+		 */
+		float fitness = 5000*(GoalsOnAdversaryGoal/(2*GoalsOnMyGoal+1)) + avgSpeed/10 + distanceToBall/1000 + maxSimulTime/driveTime/10
+						+ Math.Abs(distanceTravelled)/100 + (distancefromBallToMyGoal - distancefromBallToAdversaryGoal)/100;
         return fitness;
 	}
 

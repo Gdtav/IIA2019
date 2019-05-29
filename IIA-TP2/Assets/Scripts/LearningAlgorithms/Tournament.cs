@@ -14,10 +14,20 @@ public class Tournament : SelectionMethod
         {
             i = r.Next(oldpop.Count);
             j = r.Next(oldpop.Count);
-            if (r.NextDouble() > k || oldpop[i].Fitness > oldpop[j].Fitness)
-                victors.Add(oldpop[i].Clone());
+            if (oldpop[i].Fitness > oldpop[j].Fitness)
+			{
+				if(r.NextDouble() < k)
+					victors.Add(oldpop[j].Clone());
+				else
+                	victors.Add(oldpop[i].Clone());
+			}
             else
-                victors.Add(oldpop[j].Clone());
+			{
+				if(r.NextDouble() < k)
+					victors.Add(oldpop[i].Clone());
+				else
+                	victors.Add(oldpop[j].Clone());
+			}
         }
         return victors;
     }
